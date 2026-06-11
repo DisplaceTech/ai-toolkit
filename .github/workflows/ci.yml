@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  # Opt every JavaScript-based action into the Node 24 runtime ahead of
+  # GitHub's June 2026 forced cut-over. `actions/checkout@v4` and
+  # setup-php still ship Node 20 bundles; without this, each run emits a
+  # "Node.js 20 actions are deprecated" warning per leg. Once the
+  # upstream actions ship Node-24 bundles natively, this line can drop.
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  lint:
+    name: cs + static analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+
+      - run: composer validate --strict
+
+      - run: composer install --no-interaction --no-progress
+
+      - run: composer cs
+
+      - run: composer stan
+
+  test:
+    name: test (PHP ${{ matrix.php }} / ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    needs: lint
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-14]   # macos-14 is the arm64 runner
+        # 8.5 is the current stable; 8.4 is the most-deployed; 8.3 is
+        # security-only through end of 2026 but still widely installed.
+        php: ['8.3', '8.4', '8.5']
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+
+      - run: composer install --no-interaction --no-progress
+
+      - run: composer test
