@@ -1,0 +1,16 @@
+# Composer
+/vendor/
+composer.lock
+
+# Tool caches
+.php-cs-fixer.cache
+.phpunit.cache/
+/phpstan.neon
+/phpunit.xml
+/.php-cs-fixer.php
+
+# Editor/IDE noise
+.idea/
+.vscode/
+*.swp
+.DS_Store

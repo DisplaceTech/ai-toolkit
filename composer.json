@@ -1,0 +1,70 @@
+{
+    "name": "displace/ai-toolkit",
+    "description": "Pure-PHP utilities for local-first AI pipelines: text chunkers, packed-vector math, MRL truncation.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "ai",
+        "chunking",
+        "text-splitter",
+        "embeddings",
+        "vectors",
+        "rag",
+        "matryoshka"
+    ],
+    "homepage": "https://github.com/DisplaceTech/ai-toolkit",
+    "authors": [
+        {
+            "name": "Eric Mann",
+            "homepage": "https://github.com/ericmann"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.64",
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^11.5 || ^12.0"
+    },
+    "suggest": {
+        "displace/ai-contracts": "Stable interfaces (Embedder, VectorIndex, ...) that these utilities feed"
+    },
+    "autoload": {
+        "psr-4": {
+            "Displace\\AI\\Toolkit\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Displace\\AI\\Toolkit\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "check": [
+            "@cs",
+            "@stan",
+            "@test"
+        ],
+        "cs": "php-cs-fixer fix --dry-run --diff",
+        "cs:fix": "php-cs-fixer fix",
+        "stan": "phpstan analyse",
+        "test": "phpunit"
+    },
+    "scripts-descriptions": {
+        "check": "Run the full local quality gate: code style, static analysis, tests.",
+        "cs": "Check code style without modifying files.",
+        "cs:fix": "Fix code style violations in place.",
+        "stan": "Run PHPStan static analysis.",
+        "test": "Run the PHPUnit test suite."
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.1.x-dev"
+        }
+    }
+}
