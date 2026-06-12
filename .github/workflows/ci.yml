@@ -20,7 +20,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: shivammathur/setup-php@v2
+      # Pinned to 2.36.0: setup-php 2.37.x stopped installing PHP on the
+        # macos-14 runners on 2026-06-12 (probe in DisplaceTech/ext-template).
+        # Unpin when upstream ships a fix.
+      - uses: shivammathur/setup-php@2.36.0
         with:
           php-version: '8.4'
           coverage: none
@@ -47,7 +50,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: shivammathur/setup-php@v2
+      # Pinned to 2.36.0: setup-php 2.37.x stopped installing PHP on the
+        # macos-14 runners on 2026-06-12 (probe in DisplaceTech/ext-template).
+        # Unpin when upstream ships a fix.
+      - uses: shivammathur/setup-php@2.36.0
         with:
           php-version: ${{ matrix.php }}
           coverage: none
