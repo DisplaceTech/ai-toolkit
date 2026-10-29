@@ -6,7 +6,7 @@ this project adheres to [Semantic Versioning](https://semver.org/).
 Chunk-boundary algorithm changes are always minor releases, even when
 signature-compatible. Dates are tag dates.
 
-## [0.1.1] - Unreleased
+## [0.1.1] - 2026-10-29
 
 No code changes; chunk boundaries are identical to 0.1.0.
 
