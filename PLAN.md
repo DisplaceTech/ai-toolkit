@@ -1,10 +1,14 @@
-# ai-toolkit — Plan
+# ai-toolkit — design notes
 
 Part of the [phpai stack](https://github.com/DisplaceTech). Pure-PHP
 utilities every doc example wants; boring on purpose. No models, no
 extensions, no framework ambitions.
 
-## v0.1.0 scope (current)
+This file holds design notes and decision history, not a to-do list.
+What shipped is in [`CHANGELOG.md`](CHANGELOG.md); remaining ideas are
+[`future` issues](https://github.com/DisplaceTech/ai-toolkit/issues?q=is%3Aissue+is%3Aopen+label%3Afuture), each with its reasoning.
+
+## v0.1.0 scope (shipped 2026-06-11)
 
 - [x] `Vector\Packed` — pack/unpack, dot, cosine, norm, per-vector
       normalize, MRL truncation over packed float32 buffers.
@@ -19,15 +23,13 @@ extensions, no framework ambitions.
 - [x] Rewrite ext-infer / ext-turbovec doc examples on these helpers
       where it clarifies — done 2026-06-11 (recipes in both repos).
 
-## Later (unscheduled)
+## Remaining work
 
-- Markdown-aware chunker (split on headings before paragraphs) if doc
-  examples keep wanting it.
-- `Packed::topK()` brute-force search helper — only if a doc example
-  needs search without ext-turbovec; otherwise it competes with the
-  extension for no reason.
-- Token-count estimation helper — only with a credible accuracy story;
-  ~4 chars/token guidance lives in the README until then.
+Tracked as [`future` issues](https://github.com/DisplaceTech/ai-toolkit/issues?q=is%3Aissue+is%3Aopen+label%3Afuture):
+
+- [#1](https://github.com/DisplaceTech/ai-toolkit/issues/1) Markdown-aware chunker
+- [#2](https://github.com/DisplaceTech/ai-toolkit/issues/2) `Packed::topK()` brute-force helper, only if a doc example needs it
+- [#3](https://github.com/DisplaceTech/ai-toolkit/issues/3) Token-count estimation helper, only with a credible accuracy story
 
 ## Design notes
 

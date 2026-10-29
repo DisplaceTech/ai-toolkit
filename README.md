@@ -15,6 +15,16 @@
 
 ---
 
+## Status
+
+Feature-complete for its scope. Maintained: dependency updates and
+compatibility fixes ship as patch/minor releases — see the
+[CHANGELOG](CHANGELOG.md). Last verified: PHP 8.3/8.4/8.5 on Linux x86_64 and macOS arm64, `ext-mbstring` only, 2026-10-29.
+
+Remaining ideas are tracked as [`future` issues](https://github.com/DisplaceTech/ai-toolkit/issues?q=is%3Aissue+is%3Aopen+label%3Afuture).
+**Co-maintainers welcome** — if you run this in production and want a
+say in where it goes, open an issue or a PR.
+
 ## What is ai-toolkit?
 
 The plumbing every embed-and-search pipeline needs and no one wants to
@@ -105,6 +115,30 @@ retrieval (rule of thumb: ~4 characters per English token) ·
 database · **document loaders/parsers** (PDF, HTML, ...) — bring your
 own text · **an orchestration framework** — chains and agents belong
 to the frameworks.
+
+## Part of a stack
+
+Transcribe → chunk → embed → search → answer, entirely on your hardware:
+
+| Stage | Package | What it does |
+| ----- | ------- | ------------ |
+| Transcribe | [ext-whisper](https://github.com/DisplaceTech/ext-whisper) | Speech-to-text over whisper.cpp |
+| Chunk | **ai-toolkit** (this repo) | Text chunkers and packed-vector math, pure PHP |
+| Embed · rerank · answer | [ext-infer](https://github.com/DisplaceTech/ext-infer) | Local LLM chat, embeddings and reranking over llama.cpp |
+| Search | [ext-turbovec](https://github.com/DisplaceTech/ext-turbovec) | Compressed in-memory vector search (TurboQuant) |
+| Integrate | [ai-contracts](https://github.com/DisplaceTech/ai-contracts) | The interfaces frameworks code against |
+| Reference app | [rag-over-markdown](https://github.com/DisplaceTech/rag-over-markdown) | The whole pipeline over a folder of markdown |
+
+Every package links the others; the extensions share one scaffold,
+[ext-template](https://github.com/DisplaceTech/ext-template).
+
+## Writing about this
+
+- [ai-contracts & ai-toolkit: The Primitives a PHP AI Ecosystem Needs](https://eric.mann.blog/ai-contracts-ai-toolkit-php-primitives/)
+- [RAG Over Markdown: An End-to-End Local Pipeline in Pure PHP](https://eric.mann.blog/rag-over-markdown-local-pipeline-php/)
+
+The stack's launch series ran Sept 22 – Oct 1, 2026; everything else
+is at [eric.mann.blog/writing](https://eric.mann.blog/writing/).
 
 ## License
 
