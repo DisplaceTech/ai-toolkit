@@ -4,6 +4,13 @@ on:
   push:
     branches: [main]
   pull_request:
+  # Weekly run against fresh runners and PHP patch releases, so a green
+  # badge means "green this week". GitHub disables scheduled workflows in
+  # public repos after 60 days with no repository activity; the weekly
+  # Dependabot PRs (and merging them) are what keep this schedule alive.
+  schedule:
+    - cron: '29 6 * * 1'   # Mondays 06:29 UTC
+  workflow_dispatch:
 
 env:
   # Opt every JavaScript-based action into the Node 24 runtime ahead of
@@ -20,10 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Pinned to 2.36.0: setup-php 2.37.x stopped installing PHP on the
-      # macos-14 runners on 2026-06-12 (probe in DisplaceTech/ext-template).
-      # Unpin when upstream ships a fix.
-      - uses: shivammathur/setup-php@2.36.0
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
           coverage: none
@@ -47,20 +51,10 @@ jobs:
         # 8.5 is the current stable; 8.4 is the most-deployed; 8.3 is
         # security-only through end of 2026 but still widely installed.
         php: ['8.3', '8.4', '8.5']
-        exclude:
-          # setup-php cannot currently install PHP 8.5 on the macos-14
-          # runners (2026-06-12: 2.37.x fails for every PHP version there,
-          # and 2.36.0 predates 8.5). Re-add this leg when ext-template's
-          # "macOS probe" workflow passes on @v2 again.
-          - os: macos-14
-            php: '8.5'
     steps:
       - uses: actions/checkout@v4
 
-      # Pinned to 2.36.0: setup-php 2.37.x stopped installing PHP on the
-      # macos-14 runners on 2026-06-12 (probe in DisplaceTech/ext-template).
-      # Unpin when upstream ships a fix.
-      - uses: shivammathur/setup-php@2.36.0
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           coverage: none
